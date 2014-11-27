@@ -12,8 +12,8 @@ public class Graph {
   // vertex, comparable s.t. heap.extractMin() returns the closest frontier vertex
   private class Vertex implements Comparable<Vertex> {
     public Integer id;
-    public float d;
-    public Vertex pi;
+    public float d;	// best distance to
+    public Vertex pi;	// predecessor node
 
     public Vertex(int id) {
       this.id = id;
@@ -67,6 +67,7 @@ public class Graph {
     return adjacency.keySet();
   }
 
+  // returns vertices adjacent to a particular vertex
   public Set<Edge> getEdgeSet(int id) {
     return adjacency.get(getVertex(id));
   }
@@ -117,6 +118,7 @@ public class Graph {
       q.add(getVertex(id));
     }
 
+    // run dijkstra
     while ((u = q.poll()) != null) {
       for (Edge e : getEdgeSet(u.id)) {
         if (e.v.d > u.d + e.w) {
