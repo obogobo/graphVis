@@ -14,6 +14,7 @@ public class Graph {
     public Integer id;
     public float d;	// best distance to
     public Vertex pi;	// predecessor node
+    public boolean disabled;  
 
     public Vertex(int id) {
       this.id = id;
@@ -91,9 +92,9 @@ public class Graph {
       // throw new NullPointerException(String.format("No such Vertex, %d", U == null ? u : v));
       return null;
     } else {
-      Edge E = new Edge(U, V, w);
-      adjacency.get(U).add(E);
-      return E;
+      Edge e = new Edge(U, V, w);
+      adjacency.get(U).add(e);
+      return e;
     }
   }
 
@@ -121,7 +122,7 @@ public class Graph {
     // run dijkstra
     while ((u = q.poll()) != null) {
       for (Edge e : getEdgeSet(u.id)) {
-        if (e.v.d > u.d + e.w) {
+        if (e.v.d > u.d + e.w && !u.disabled) {
           q.remove(e.v);
           e.v.d = u.d + e.w;
           e.v.pi = u;
